@@ -36,19 +36,61 @@ func main() {
 }
 
 // https://leetcode.com/problems/jewels-and-stones/description/
+// func numJewelsInStones(jewels string, stones string) int {
+// 	jewelSet := 0 // 64bit
+// 	count := 0
+
+// 	for _, v := range jewels {
+// 		jewelSet |= 1 << (v - 'A')
+// 	}
+
+// 	for _, v := range stones {
+// 		if jewelSet&(1<<(v-'A')) != 0 {
+// 			count++
+// 		}
+// 	}
+
+// 	return count
+// }
+
 func numJewelsInStones(jewels string, stones string) int {
-	jewelSet := 0 // 64bit
+	const ARR_SIZE = 'z' - 'A' + 1 // 58
+	arrJewels := [ARR_SIZE]byte{}
 	count := 0
 
 	for _, v := range jewels {
-		jewelSet |= 1 << (v - 'A')
+		arrJewels[v-'A']++
 	}
 
 	for _, v := range stones {
-		if jewelSet&(1<<(v-'A')) != 0 {
+		if arrJewels[v-'A'] != 0 {
 			count++
 		}
 	}
 
 	return count
 }
+
+/*
+
+// cuz the theme hashtable on lk(Introduction to Data Structure. Hash Table)
+func numJewelsInStones(jewels string, stones string) int {
+	count := 0
+	m := make(map[byte]struct{})
+
+	for i := 0; i < len(jewels); i++ {
+		k := jewels[i]
+		if _, ok := m[k]; !ok {
+			m[k] = struct{}{}
+		}
+	}
+
+	for i := 0; i < len(stones); i++ {
+		if _, ok := m[stones[i]]; ok {
+			count++
+		}
+	}
+
+	return count
+}
+*/
