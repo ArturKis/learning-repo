@@ -39,8 +39,160 @@ func main() {
 	fmt.Println(ll.Get(1))
 }
 
-// TODO: check tomorrow right implementation
+type Node struct {
+	val  int
+	next *Node
+	prev *Node
+}
 
+type MyLinkedList struct {
+	head *Node
+	tail *Node
+	size int
+}
+
+func Constructor() *MyLinkedList {
+	return &MyLinkedList{
+		head: nil,
+		tail: nil,
+		size: 0,
+	}
+}
+
+func (this *MyLinkedList) FindNode(idx int) *Node {
+	var curr *Node
+	if idx < this.size/2 {
+		curr = this.head
+
+		for idx > 0 {
+			curr = curr.next
+			idx--
+		}
+	} else {
+		curr = this.tail
+
+		for idx < this.size-1 {
+			curr = curr.prev
+			idx++
+		}
+	}
+
+	return curr
+}
+
+func (this *MyLinkedList) Get(idx int) int {
+	if idx < 0 || idx >= this.size {
+		return -1
+	}
+
+	return this.FindNode(idx).val
+}
+
+func (this *MyLinkedList) AddAtHead(val int) {
+	node := &Node{val: val}
+
+	if this.size == 0 {
+		this.head = node
+		this.tail = node
+	} else {
+		node.next = this.head
+		this.head.prev = node
+		this.head = node
+	}
+
+	this.size++
+}
+
+func (this *MyLinkedList) AddAtTail(val int) {
+	if this.size == 0 {
+		this.AddAtHead(val)
+	} else {
+		node := &Node{val: val}
+
+		node.prev = this.tail
+		this.tail.next = node
+		this.tail = node
+		this.size++
+	}
+}
+
+func (this *MyLinkedList) AddAtIndex(idx int, val int) {
+	if idx < 0 || idx > this.size {
+		return
+	}
+
+	switch idx {
+	case 0:
+		this.AddAtHead(val)
+	case this.size:
+		this.AddAtTail(val)
+	default:
+		node := &Node{val: val}
+		curr := this.FindNode(idx)
+
+		node.next = curr
+		node.prev = curr.prev
+		curr.prev.next = node
+		curr.prev = node
+
+		this.size++
+	}
+}
+
+func (this *MyLinkedList) DeleteHead() {
+	switch this.size {
+	case 0:
+		return
+	case 1:
+		this.head = nil
+		this.tail = nil
+		this.size--
+	default:
+		this.head = this.head.next
+		this.head.prev.next = nil
+		this.head.prev = nil
+		this.size--
+	}
+}
+
+func (this *MyLinkedList) DeleteTail() {
+	switch this.size {
+	case 0:
+		return
+	case 1:
+		this.tail = nil
+		this.head = nil
+		this.size--
+	default:
+		this.tail = this.tail.prev
+		this.tail.next.prev = nil
+		this.tail.next = nil
+		this.size--
+	}
+}
+
+func (this *MyLinkedList) DeleteAtIndex(idx int) {
+	if idx < 0 || idx >= this.size {
+		return
+	}
+
+	switch idx {
+	case 0:
+		this.DeleteHead()
+	case this.size - 1:
+		this.DeleteTail()
+	default:
+		curr := this.FindNode(idx)
+
+		curr.prev.next = curr.next
+		curr.next.prev = curr.prev
+		curr.prev, curr.next = nil, nil
+		this.size--
+	}
+}
+
+/* first implementation
+// TODO: check tomorrow right implementation
 type Node struct {
 	val  int
 	next *Node
@@ -146,3 +298,4 @@ func (this *MyLinkedList) DeleteAtIndex(index int) {
 
 	curr.next, curr.next.next = curr.next.next, nil
 }
+*/
