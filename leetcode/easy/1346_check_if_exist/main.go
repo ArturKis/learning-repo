@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 /*
-# Check If N and Its Double Exist
+# 1346. Check If N and Its Double Exist
 
 Given an array arr of integers, check if there exist two indices i and j such that :
   - i != j

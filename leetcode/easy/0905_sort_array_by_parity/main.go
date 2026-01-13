@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 /*
-# Sort Array By Parity
+# 905. Sort Array By Parity
 
 Given an integer array nums, move all the even integers at the beginning of the array followed by all the odd integers.
 

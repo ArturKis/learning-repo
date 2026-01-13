@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 /*
-	# Valid Mountain Array
+# 941. Valid Mountain Array
 
 Given an array of integers arr, return true if and only if it is a valid mountain array.
 

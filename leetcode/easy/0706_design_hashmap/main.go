@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 /*
-# Design HashMap
+# 706. Design HashMap
 
 Design a HashMap without using any built-in hash table libraries.
 
